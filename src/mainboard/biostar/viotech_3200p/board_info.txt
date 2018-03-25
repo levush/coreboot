@@ -1,0 +1,7 @@
+Category: mini
+Board URL: http://www.biostar.com.tw/app/en/mb/introduction.php?S_ID=543 
+ROM package: DIL8
+ROM protocol: SPI
+ROM socketed: y
+Flashrom support: y
+Release year: 2011
