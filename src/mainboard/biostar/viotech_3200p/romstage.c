@@ -48,11 +48,17 @@ void main(unsigned long bist)
 	/* First thing we need to do on the VX900, before anything else */
 	vx900_enable_pci_config_space();
 
-	/* Serial console is easy to take care of */
-	fintek_enable_serial(SERIAL_DEV, CONFIG_TTYS0_BASE);
+
+	/* run ite */
+	sbxxx_enable_48mhzout();
+	ite_conf_clkin(CLKIN_DEV, ITE_UART_CLK_PREDIVIDE_48);
+	ite_kill_watchdog(GPIO_DEV);
+
+	/* Serial console using com1 of ite super-io*/
+	ite_enable_serial(SERIAL_DEV, CONFIG_TTYS0_BASE);
 	console_init();
 	printk(BIOS_DEBUG, "Console initialized.\n");
-
+		
 	vx900_cpu_bus_interface_setup();
 
 	/* Be smart. Get this info */
