@@ -19,7 +19,51 @@
  */
 
 /*
-The board has the following interesting devices:
+Says the tailor:
+----------------
+Why bother with that old C7 board? The VIA-CPU is slow and
+Intel CPUs provide more mips per watt. This is right but
+Intel CPUs also provide you with a spy engine called 
+"Management Engine" that can DMA to your RAM, read your
+keyboard strokes and can send stuff via the NIC of the chipset
+without your OS knowing thanks to a build-in switch at MAC-layer.
+The Intel-Spy-Engine ME runs on ARC32 core or i486 on newer models.
+Also Intel-CPUs accelerate crypto using AES-ni.
+So one needs a secure replacement for VPN or slower data storage,
+here comes a C7 board as the VIA C7 contains a crypto engine 
+which calculates AES and produces random numbers (DONT TRUST
+THE RAMDOMNESS OF PADLOCK) use https://github.com/pwarren/rtl-entropy
+and a 50 Ohm SMA-Resistor at the antenna port of the RTL SDR device!
+Also VIA C7 *should* be free of spectre and meltdown bugs as it
+has no advanced features as branch prediction.
+So having a good C7 board and coreboot for it gives you some years
+of more secure computing until RISC-V boards are for sale at 
+your local computer dealer...
+
+So looking for a *good* VIA C7 board that can be used as *trusted* 
+VPN router and encrypted storage server, I found this board:
+
+The board biostar viotech 3200+ has a PCIe 16 slot with 8
+lanes and DDR3 RAM which renders it to be one of the best
+VIA C7 boards, but why the greedy people at Biostar only
+used a 100Mbit NIC saving one buck max, but turning off a lot
+of people!  A good pci-express one-lane GbitEthernet NIC would 
+have made the board a real cool device, even today!
+So one has to choose between a raid controller and multi nic 
+for the pci-express slot :-(
+But is is still usable as VPN router (add broadcom nic board
+with two dual gbit ethernet chips by broadcom. Dont trust Intel,
+but also be aware of the "tcp-offload engine" in broadcom that
+might cause truble to privacy, but this engine is not used in Linux
+for these and other reasons.
+Or add a HW raid controller (gives you trouble if it breaks
+and you want to recover your data but it gives the board a
+performance boost needed to calculate the XOR for RAID5 and 6)
+Or add an FPGA board to the PCIe slot and let it fly ...
+And there is still a legacy PCI32bit slot, so try an SCSI
+ or other old controller to do trusted vintage stuff with it.
+
+The biostar viotech 3200+ has the following interesting devices:
 -------------------------------------------------
 VIA C7-D (cpu)
 VX900 (northbridge)
