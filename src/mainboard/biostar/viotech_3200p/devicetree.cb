@@ -15,8 +15,8 @@
 ##
 
 ##
-## Inspired from different via C7 boards
-##
+## Inspired from different via C7 boards and 
+## biostar a68n_5200 for superio ITE it8728f
 
 
 chip northbridge/via/vx900		# Northbridge
@@ -82,30 +82,39 @@ chip northbridge/via/vx900		# Northbridge
 			#chip drivers/generic/generic	# DIMM 1 channel 1
 			#	device i2c 51 on end
 			#end
-			chip superio/fintek/f81865f	# Super duper IO
-				device pnp 4e.0 off end	# Floppy
-				device pnp 4e.3 off end	# Parallel Port
-				device pnp 4e.4 off end	# Hardware Monitor
-				device pnp 4e.5 off end	# Keyboard not here
-				device pnp 4e.6 off end	# GPIO
-				device pnp 4e.a off end	# PME
-				device pnp 4e.10 on	# COM1
+			chip superio/ite/it8728f
+				#register "multi_function_register_1" = "0x01"
+				device pnp 2e.0 off end		# Floppy
+				device pnp 2e.1 on		# COM1
 					io 0x60 = 0x3f8
 					irq 0x70 = 4
 				end
-				device pnp 4e.11 on	# COM2
-					io 0x60 = 0x2f8
-					irq 0x70 = 3
+				device pnp 2e.2 off end		# COM2
+				device pnp 2e.3 on		# Parallel Port
+					io 0x60 = 0x378
+					irq 0x70 = 5
+					drq 0x74 = 4
 				end
-				device pnp 4e.12 on	# COM3
-					io 0x60 = 0x3e8
-					irq 0x70 = 10
+				device pnp 2e.4 on		# Hardware Monitor
+					io 0x60 = 0xa00
+					io 0x62 = 0xa20
+					irq 0x70 = 0
+					irq 0xf1 = 0x00
+					irq 0xf2 = 0x04
+					irq 0xf3 = 0xa0
+					irq 0xf5 = 0x0f
+					irq 0xf9 = 0xa0
+					irq 0xfa = 0x04
 				end
-				device pnp 4e.13 on	# COM4
-					io 0x60 = 0x2e8
-					irq 0x70 = 11
+				device pnp 2e.5 on		# KBC
+					io 0x60 = 0x60
 				end
-			end # superio/fintek/f81865f
+				device pnp 2e.6 off end		# KBC?
+				device pnp 2e.7 off end		# GPIO
+				device pnp 2e.8 off end
+				device pnp 2e.9 off end
+				device pnp 2e.a off end		# IR
+			end # ITE IT8728F
 		end # LPC
 		device pci 11.7 on end		# [a353] North-South control
 		device pci 14.0 on end		# [3288] Azalia HDAC
